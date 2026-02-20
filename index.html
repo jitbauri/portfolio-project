@@ -1,410 +1,109 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Terminal, 
-  Download, 
-  Send, 
-  Code2, 
-  BrainCircuit, 
-  Database, 
-  Cpu, 
-  Sparkles,
-  User,
-  Laptop,
-  CheckCircle2,
-  Command,
-  Twitter,
-  ExternalLink,
-  ChevronRight,
-  PieChart,
-  Activity,
-  Zap
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jit Bauri Portfolio</title>
 
-/**
- * GITHUB PAGES DEPLOYMENT GUIDE:
- * -----------------------------
- * 1. In your project's root 'package.json', add:
- * "homepage": "https://your-username.github.io/your-repo-name",
- * 2. Install gh-pages: npm install gh-pages --save-dev
- * 3. Add to 'scripts' in package.json:
- * "predeploy": "npm run build",
- * "deploy": "gh-pages -d build"
- * * FOR LINKEDIN/SEO PREVIEW:
- * -------------------------
- * Add these to your public/index.html <head>:
- * <meta property="og:title" content="Jit Bauri | AI & Data Science Specialist" />
- * <meta property="og:description" content="Portfolio of a BSc CS Student focusing on Python, ML, and Neural Intelligence." />
- * <meta property="og:image" content="%PUBLIC_URL%/og-preview.png" />
- */
+  <!-- Tailwind CDN (optional but easier) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
+  <link rel="stylesheet" href="style.css">
+</head>
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-};
+<body class="bg-[#05060a] text-slate-300">
 
-export default function App() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [formStatus, setFormStatus] = useState('idle');
-  const { scrollYProgress } = useScroll();
-  
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const handleMessageSubmit = (e) => {
-    e.preventDefault();
-    setFormStatus('sending');
-    setTimeout(() => setFormStatus('success'), 1500);
-  };
-
-  const expertise = [
-    { name: "Python Engineering", icon: Code2, level: "Core Architecture" },
-    { name: "Machine Learning", icon: BrainCircuit, level: "Model Design" },
-    { name: "Data Science", icon: Database, level: "Analytics" },
-    { name: "Neural Networks", icon: Cpu, level: "DL Research" }
-  ];
-
-  const focusAreas = [
-    {
-      title: "Predictive Analytics",
-      desc: "Developing and optimizing regression and classification models using Python to forecast complex data patterns.",
-      tech: ["Python", "Scikit-Learn", "NumPy"],
-      icon: <Activity size={24} className="text-indigo-400" />
-    },
-    {
-      title: "Exploratory Data Research",
-      desc: "Uncovering deep insights from unstructured datasets through statistical modeling and advanced visualization.",
-      tech: ["Pandas", "Matplotlib", "Seaborn"],
-      icon: <PieChart size={24} className="text-indigo-400" />
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#05060a] text-slate-300 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden relative text-[14px]">
-      
-      {/* Background HUD Layer */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500 opacity-20"
-        style={{
-          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.15), transparent 45%)`
-        }}
-      />
-      <div className="fixed inset-0 z-0 bg-[linear-gradient(to_right,#1e293b0a_1px,transparent_1px),linear-gradient(to_bottom,#1e293b0a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-
-      {/* Deployment Progress Bar */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-600 to-indigo-400 origin-left z-[100]" style={{ scaleX }} />
-
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md border-b border-slate-800/50 bg-[#05060a]/80 px-6">
-        <div className="max-w-7xl mx-auto h-16 flex items-center justify-between">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center shadow-lg shadow-indigo-500/20">
-              <Zap className="text-white" size={18} />
-            </div>
-            <span className="text-white font-bold text-sm tracking-widest uppercase">Jit_Bauri.ai</span>
-          </motion.div>
-          
-          <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-            <a href="#about" className="hover:text-indigo-400 transition-colors">Bio</a>
-            <a href="#expertise" className="hover:text-indigo-400 transition-colors">Expertise</a>
-            <a href="#focus" className="hover:text-indigo-400 transition-colors">Focus</a>
-            <a href="#contact" className="hover:text-indigo-400 transition-colors">Connect</a>
-          </div>
-        </div>
-      </nav>
-
-      <main className="relative z-10">
-        
-        {/* --- HERO SECTION --- */}
-        <section id="home" className="min-h-screen flex items-center justify-center pt-20 px-6">
-          <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-indigo-500/20 bg-indigo-500/5 text-indigo-400 font-mono text-[10px] font-bold uppercase tracking-widest mb-8">
-                <Command size={14} />
-                <span>BSc Computer Science • AI Aspirant</span>
-              </motion.div>
-              
-              <motion.h1 variants={fadeInUp} className="text-6xl md:text-8xl font-black text-white mb-6 leading-[0.9] tracking-tighter">
-                Python <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-500">
-                  Engineer.
-                </span>
-              </motion.h1>
-              
-              <motion.p variants={fadeInUp} className="text-lg text-slate-400 mb-10 max-w-xl leading-relaxed font-light">
-                Specializing in <span className="text-white font-semibold underline decoration-indigo-500/30 underline-offset-4 tracking-tight">Machine Learning</span> and <span className="text-white font-semibold">Data Science</span> logic. Bridging raw data with intelligent neural architectures.
-              </motion.p>
-
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-5 items-center">
-                {/* Advanced Filling Button */}
-                <motion.a
-                  href="resume.pdf"
-                  download
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative group h-14 w-full sm:w-64 rounded-xl bg-indigo-600/10 border border-indigo-500/30 flex items-center justify-center gap-3 overflow-hidden transition-all shadow-xl"
-                >
-                  <motion.div 
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: '0%' }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-indigo-600 z-0" 
-                  />
-                  <span className="relative z-10 flex items-center gap-2 text-indigo-100 font-bold uppercase tracking-widest text-[10px] group-hover:text-white transition-colors duration-300">
-                    <Download size={18} />
-                    Download Resume
-                  </span>
-                </motion.a>
-
-                <div className="flex gap-4">
-                  <a href="https://github.com/jitbauri" target="_blank" rel="noreferrer" className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-indigo-500/50 text-slate-400 hover:text-indigo-400 transition-all shadow-xl">
-                    <Github size={22} />
-                  </a>
-                  <a href="https://www.linkedin.com/in/jit-bauri-440332284/" target="_blank" rel="noreferrer" className="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-indigo-500/50 text-slate-400 hover:text-indigo-400 transition-all shadow-xl">
-                    <Linkedin size={22} />
-                  </a>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* --- VISUAL CORE: Image & Code Bio --- */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="relative flex justify-center lg:justify-end"
-            >
-              <div className="relative w-full max-w-[420px] aspect-square group">
-                <div className="absolute inset-0 bg-indigo-600/10 blur-[100px] rounded-full" />
-                
-                <div className="absolute inset-0 rounded-3xl border border-white/5 bg-[#0d1117] overflow-hidden group shadow-2xl p-1">
-                  <div className="absolute top-0 w-full h-10 bg-slate-900/80 backdrop-blur-md border-b border-white/5 flex items-center px-6 justify-between z-20">
-                    <div className="flex gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/40" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/40" />
-                    </div>
-                    <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest italic">python_runtime.py</span>
-                  </div>
-
-                  <div className="w-full h-full flex flex-col items-center justify-center p-8 pt-16">
-                    <div className="w-32 h-32 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-8 overflow-hidden relative group-hover:border-indigo-500/50 transition-all shadow-inner">
-                       <User size={64} className="text-slate-800 group-hover:text-indigo-500/20 group-hover:scale-110 transition-all duration-700" />
-                       {/* USER: Replace 'profile picture.gif' with your actual file in the public folder */}
-                       <img src="profile picture.gif" className="w-full h-full object-cover absolute inset-0 opacity-80" alt="Jit Bauri" onError={(e) => e.target.style.display='none'} />
-                    </div>
-                    
-                    <div className="w-full font-mono text-[11px] space-y-3 leading-relaxed">
-                      <div className="flex gap-2"><span className="text-indigo-400">01</span> <span className="text-purple-400">class</span> <span className="text-yellow-200">Engineer</span> {'{'}</div>
-                      <div className="pl-6"><span className="text-indigo-400">02</span>  <span className="text-slate-500">primary_lang:</span> <span className="text-orange-300">"Python"</span>,</div>
-                      <div className="pl-6"><span className="text-indigo-400">03</span>  <span className="text-slate-500">research:</span> [<span className="text-emerald-400">"AI"</span>, <span className="text-emerald-400">"ML"</span>, <span className="text-emerald-400">"DS"</span>],</div>
-                      <div className="pl-6"><span className="text-indigo-400">04</span>  <span className="text-slate-500">goal:</span> <span className="text-orange-300">"IIT_MTech"</span>,</div>
-                      <div className="pl-2"><span className="text-indigo-400">05</span> {'}'}</div>
-                    </div>
-                  </div>
-
-                  <motion.div 
-                    animate={{ top: ['0%', '100%', '0%'] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-x-0 h-[1px] bg-indigo-500/20 z-10 shadow-[0_0_10px_#6366f1]"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* --- ABOUT SECTION --- */}
-        <section id="about" className="py-24 px-6 border-t border-slate-900">
-          <div className="max-w-4xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 shadow-2xl relative overflow-hidden"
-            >
-              <h2 className="text-xs font-bold text-indigo-400 uppercase tracking-[0.3em] mb-6 tracking-widest">Aspirant Profile</h2>
-              <p className="text-xl md:text-2xl text-slate-200 leading-relaxed font-light italic">
-                “I am Jit, a software engineering student specializing in <span className="text-indigo-400 font-bold">Python</span>. My mission is to bridge the gap between raw data and actionable intelligence using <span className="text-indigo-400 uppercase tracking-widest font-black">AI & Machine Learning</span>. Currently training models and aiming for specialized research at <span className="text-white">IIT</span>.”
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* --- EXPERTISE SECTION --- */}
-        <section id="expertise" className="py-24 px-6 border-t border-slate-900 bg-slate-950/20">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-black text-white uppercase tracking-tighter italic tracking-widest">Technical <span className="text-indigo-500 underline decoration-indigo-500/20 underline-offset-8">Infrastructure</span></h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {expertise.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner">
-                    <item.icon className="text-indigo-400" size={24} />
-                  </div>
-                  <h3 className="text-white font-bold mb-1 uppercase tracking-widest text-sm">{item.name}</h3>
-                  <p className="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">{item.level}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* --- FOCUS SECTION --- */}
-        <section id="focus" className="py-24 px-6 border-t border-slate-900">
-          <div className="max-w-7xl mx-auto">
-             <div className="text-center mb-16">
-              <h2 className="text-3xl font-black text-white uppercase tracking-tighter italic tracking-widest">Research <span className="text-indigo-500">& Development</span></h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {focusAreas.map((focus, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="p-10 rounded-3xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/20 transition-all group relative overflow-hidden shadow-2xl"
-                >
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="p-4 rounded-2xl bg-indigo-600/5 border border-indigo-600/10 shadow-inner">
-                      {focus.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4 italic tracking-tight">{focus.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8">{focus.desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {focus.tech.map((t, idx) => (
-                      <span key={idx} className="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* --- CONTACT SECTION --- */}
-        <section id="contact" className="py-24 px-6 border-t border-slate-900 bg-slate-950/20">
-          <div className="max-w-5xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-[#0d1117] border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl relative"
-            >
-              <div className="p-10 md:p-16 text-center">
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6 italic tracking-tighter uppercase">Initialize <span className="text-indigo-500 underline underline-offset-[12px] decoration-1 decoration-indigo-500/20">Contact.</span></h2>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                   <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5">
-                      <Mail className="text-indigo-500" size={24} />
-                      <span className="text-[10px] font-mono text-slate-400 break-all">jitbauri.official@gmail.com</span>
-                   </div>
-                   <a target="_blank" href="https://github.com/jitbauri" className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
-                      <Github className="text-indigo-500" size={24} />
-                      <span className="text-[10px] font-mono text-slate-400 tracking-widest">/jitbauri</span>
-                   </a>
-                   <a target="_blank" href="https://www.linkedin.com/in/jit-bauri-440332284/" className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
-                      <Linkedin className="text-indigo-500" size={24} />
-                      <span className="text-[10px] font-mono text-slate-400 tracking-widest">/jit-bauri</span>
-                   </a>
-                   <a target="_blank" href="https://x.com/inc_jit" className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
-                      <Twitter className="text-indigo-500" size={24} />
-                      <span className="text-[10px] font-mono text-slate-400 tracking-widest">@inc_jit</span>
-                   </a>
-                </div>
-
-                <div className="max-w-xl mx-auto">
-                  {formStatus === 'success' ? (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center text-center py-10">
-                      <CheckCircle2 size={48} className="text-indigo-400 mb-6 drop-shadow-[0_0_10px_#6366f1]" />
-                      <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest">Transmission Successful</h3>
-                      <button onClick={() => setFormStatus('idle')} className="mt-8 text-indigo-400 text-[10px] uppercase font-bold tracking-widest hover:text-white transition-all underline">Send New Thread</button>
-                    </motion.div>
-                  ) : (
-                    <form onSubmit={handleMessageSubmit} className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input 
-                          type="text" 
-                          required
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800"
-                          placeholder="Sender_ID"
-                        />
-                        <input 
-                          type="email" 
-                          required
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800"
-                          placeholder="Sender_Endpoint"
-                        />
-                      </div>
-                      <textarea 
-                        required
-                        rows="4"
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-800"
-                        placeholder="Message_Payload"
-                      />
-                      <motion.button 
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.98 }}
-                        type="submit"
-                        disabled={formStatus === 'sending'}
-                        className="w-full bg-indigo-600 hover:bg-indigo-500 text-black font-black py-4 rounded-xl flex items-center justify-center gap-3 transition-all disabled:opacity-50 tracking-widest uppercase text-[10px] shadow-[0_10px_20px_-5px_#6366f155]"
-                      >
-                        {formStatus === 'sending' ? 'Executing Upload...' : 'Initialize Link'}
-                        <Send size={16} />
-                      </motion.button>
-                    </form>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-      </main>
-
-      <footer className="py-16 text-center border-t border-slate-900 bg-[#05060a] px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-mono text-slate-600 uppercase tracking-[0.5em]">
-           <div className="flex items-center gap-2">
-            <Sparkles size={12} className="text-indigo-500" />
-            <span>AI_ASPIRANT_JIT_BAURI</span>
-           </div>
-           <p className="italic opacity-50">&copy; 2025 // Neural_Network_Reserved</p>
-        </div>
-      </footer>
-
+<!-- NAVBAR -->
+<nav class="fixed top-0 w-full backdrop-blur-md border-b border-slate-800 bg-[#05060a]/80 px-6">
+  <div class="max-w-7xl mx-auto h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center">
+        ⚡
+      </div>
+      <span class="text-white font-bold text-sm tracking-widest uppercase">Jit_Bauri.ai</span>
     </div>
-  );
-}
+
+    <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+      <a href="#about">Bio</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#focus">Focus</a>
+      <a href="#contact">Connect</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6">
+  <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+    <div>
+      <div class="mb-6 text-indigo-400 font-mono text-sm">
+        BSc Computer Science • AI Aspirant
+      </div>
+
+      <h1 class="text-6xl md:text-8xl font-black text-white mb-6">
+        Python <br/>
+        <span class="text-indigo-400">Engineer.</span>
+      </h1>
+
+      <p class="text-lg text-slate-400 mb-10 max-w-xl">
+        Specializing in Machine Learning and Data Science logic.
+      </p>
+
+      <a href="resume.pdf" download
+         class="bg-indigo-600 px-6 py-3 rounded-lg text-white font-bold">
+         Download Resume
+      </a>
+    </div>
+
+    <div class="text-center">
+      <img src="profile picture.gif" class="rounded-xl w-72 mx-auto"/>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-xl text-slate-200">
+      I am Jit, a software engineering student specializing in Python.
+      My mission is AI & Machine Learning research at IIT.
+    </p>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise" class="py-24 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+
+    <div class="card">Python Engineering</div>
+    <div class="card">Machine Learning</div>
+    <div class="card">Data Science</div>
+    <div class="card">Neural Networks</div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6">
+  <div class="max-w-xl mx-auto">
+    <form id="contactForm" class="space-y-4">
+      <input type="text" placeholder="Name" required class="input"/>
+      <input type="email" placeholder="Email" required class="input"/>
+      <textarea placeholder="Message" required class="input"></textarea>
+
+      <button class="bg-indigo-600 w-full py-3 text-white rounded-lg">
+        Send Message
+      </button>
+    </form>
+
+    <div id="successMsg" class="hidden text-green-400 mt-6">
+      Message Sent Successfully!
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
