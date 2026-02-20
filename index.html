@@ -321,8 +321,8 @@
                     </div>
 
                      <div class="max-w-xl mx-auto" id="form-container">
-                        <!-- Functional Form via Formspree -->
-                        <form id="contact-form" action="https://formspree.io/f/jitbauri.official@gmail.com" method="POST" class="space-y-4">
+                        <!-- REPLACE mqaebrjr WITH YOUR FORMSPREE ID AFTER CREATING FORM -->
+                        <form id="contact-form" action="https://formspree.io/f/mqaebrjr" method="POST" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-500" placeholder="Name">
                                 <input type="email" name="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-500" placeholder="Email">
@@ -349,16 +349,15 @@
     </footer>
 
      <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // Mouse Glow
+        // Mouse Ambient Glow Logic
         document.addEventListener('mousemove', e => {
             document.documentElement.style.setProperty('--x', e.clientX + 'px');
             document.documentElement.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // Progress Bar
+        // Scroll Progress Bar Logic
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -366,7 +365,7 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // Scroll Reveal
+        // Scroll Reveal Observer
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -383,17 +382,18 @@
             lines.forEach((id, index) => {
                 setTimeout(() => {
                     document.getElementById(id).classList.add('animate');
-                }, (index * 500) + 1200);
+                }, (index * 400) + 1000);
             });
         };
 
         window.addEventListener('load', typeLines);
 
-        // Form Submission Logic
+        // Formspree Integration Logic
         const form = document.getElementById('contact-form');
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button span');
+            const originalText = btn.innerText;
             btn.innerText = "Transmitting Signal...";
 
             const formData = new FormData(form);
@@ -416,10 +416,12 @@
                     `;
                     lucide.createIcons();
                 } else {
-                    btn.innerText = "Error: Try Again";
+                    btn.innerText = "Error: Check Endpoint";
+                    setTimeout(() => btn.innerText = originalText, 2000);
                 }
             } catch (error) {
                 btn.innerText = "Connection Failed";
+                setTimeout(() => btn.innerText = originalText, 2000);
             }
         });
     </script>
