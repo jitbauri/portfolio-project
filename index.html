@@ -156,7 +156,7 @@
                     </h1>
                     
                     <p class="text-lg text-slate-400 mb-10 max-w-xl leading-relaxed font-light">
-                        Specializing in <span class="text-white font-semibold underline decoration-indigo-500/30 underline-offset-4 tracking-tight">Machine Learning</span> and <span class="text-white font-semibold">Data Science</span> logic. Bridging raw data with intelligent neural architectures.
+                        Learning <span class="text-white font-semibold underline decoration-indigo-500/30 underline-offset-4 tracking-tight">Python</span> and <span class="text-white font-semibold">Data Science</span> logic. Bridging raw data with intelligent neural architectures.
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-5 items-center">
@@ -256,6 +256,11 @@
                         <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Neural Networks</h3>
                         <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">DL Research</p>
                     </div>
+                    <div class="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group reveal" style="transition-delay: 0.3s;">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 shadow-inner"><i data-lucide="cpu" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Some Web Development</h3>
+                        <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">Websities</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -315,15 +320,16 @@
                        </a>
                     </div>
 
-                    <div class="max-w-xl mx-auto" id="form-container">
-                        <form id="contact-form" class="space-y-4">
+                     <div class="max-w-xl mx-auto" id="form-container">
+                        <!-- Functional Form via Formspree -->
+                        <form id="contact-form" action="https://formspree.io/f/jitbauri.official@gmail.com" method="POST" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800" placeholder="Sender_ID">
-                                <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800" placeholder="Sender_Endpoint">
+                                <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-500" placeholder="Name">
+                                <input type="email" name="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-500" placeholder="Email">
                             </div>
-                            <textarea required rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-800" placeholder="Message_Payload"></textarea>
+                            <textarea name="message" required rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-500" placeholder="Message"></textarea>
                             <button type="submit" class="btn-fill w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-xl flex items-center justify-center gap-3 transition-all tracking-widest uppercase text-[10px] shadow-[0_10px_20px_-5px_#6366f155]">
-                                <span>Initialize Link</span>
+                                <span>Establish Connection</span>
                             </button>
                         </form>
                     </div>
@@ -342,17 +348,17 @@
         </div>
     </footer>
 
-    <script>
+     <script>
         // Initialize Icons
         lucide.createIcons();
 
-        // Mouse Glow Effect
+        // Mouse Glow
         document.addEventListener('mousemove', e => {
             document.documentElement.style.setProperty('--x', e.clientX + 'px');
             document.documentElement.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // Scroll Progress Bar
+        // Progress Bar
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -360,35 +366,61 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         });
 
-        // Scroll Reveal Intersection Observer
-        const observerOptions = { threshold: 0.1 };
+        // Scroll Reveal
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // Simulated Form Submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        // Metadata Typing Logic
+        const typeLines = () => {
+            const lines = ['line-1', 'line-2', 'line-3', 'line-4', 'line-5'];
+            lines.forEach((id, index) => {
+                setTimeout(() => {
+                    document.getElementById(id).classList.add('animate');
+                }, (index * 500) + 1200);
+            });
+        };
+
+        window.addEventListener('load', typeLines);
+
+        // Form Submission Logic
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('button span');
-            const originalText = btn.innerText;
-            btn.innerText = "Executing Upload...";
+            btn.innerText = "Transmitting Signal...";
+
+            const formData = new FormData(form);
             
-            setTimeout(() => {
-                document.getElementById('form-container').innerHTML = `
-                    <div class="flex flex-col items-center justify-center text-center py-10 animate-pulse">
-                        <i data-lucide="check-circle-2" class="text-indigo-400 w-12 h-12 mb-6 shadow-[0_0_20px_#6366f1]"></i>
-                        <h3 class="text-xl font-bold text-white mb-2 uppercase tracking-widest">Transmission Successful</h3>
-                        <button onclick="location.reload()" class="mt-8 text-indigo-400 text-[10px] uppercase font-bold tracking-widest hover:text-white transition-all underline">Send New Thread</button>
-                    </div>
-                `;
-                lucide.createIcons();
-            }, 1500);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    document.getElementById('form-container').innerHTML = `
+                        <div class="flex flex-col items-center justify-center text-center py-10 opacity-0" style="animation: fadeInUp 0.8s forwards">
+                            <i data-lucide="check-circle-2" class="text-indigo-400 w-12 h-12 mb-6 shadow-[0_0_20px_#6366f1]"></i>
+                            <h3 class="text-xl font-bold text-white mb-2 uppercase tracking-widest">Transmission Successful</h3>
+                            <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest italic">"Packet successfully uploaded. I'll get back to you soon!"</p>
+                            <button onclick="location.reload()" class="mt-8 text-indigo-400 text-[10px] uppercase font-bold tracking-widest hover:text-white transition-all underline decoration-1">Send New Signal</button>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                } else {
+                    btn.innerText = "Error: Try Again";
+                }
+            } catch (error) {
+                btn.innerText = "Connection Failed";
+            }
         });
     </script>
 </body>
