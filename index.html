@@ -1,109 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jit Bauri Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jit Bauri | AI & Data Science Specialist</title>
+    <!-- SEO / LinkedIn Tags -->
+    <meta property="og:title" content="Jit Bauri | AI & Data Science Specialist">
+    <meta property="og:description" content="Portfolio of a BSc CS Student focusing on Python, ML, and Neural Intelligence.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #05060a;
+            color: #cbd5e1;
+            overflow-x: hidden;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Background Grid HUD */
+        .bg-grid {
+            background-image: linear-gradient(to right, #1e293b0a 1px, transparent 1px),
+                              linear-gradient(to bottom, #1e293b0a 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, #000 70%, transparent 100%);
+        }
 
-  <!-- Tailwind CDN (optional but easier) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+        /* Mouse Glow Effect */
+        #mouse-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(99, 102, 241, 0.15), transparent 45%);
+            transition: opacity 0.5s;
+        }
 
-  <link rel="stylesheet" href="style.css">
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            z-index: 100;
+            width: 0%;
+        }
+
+        /* Filling Button Animation */
+        .btn-fill {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-fill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #4f46e5;
+            width: 0;
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 0;
+        }
+        .btn-fill:hover::before { width: 100%; }
+        .btn-fill span { position: relative; z-index: 10; }
+
+        /* Laser Scanner */
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        .scanner-line {
+            height: 2px;
+            background: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 15px #6366f1;
+            position: absolute;
+            left: 0;
+            right: 0;
+            animation: scan 5s linear infinite;
+        }
+
+        /* Rotation for Tech Rings */
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .rotate-slow { animation: rotate-slow 30s linear infinite; }
+
+        /* Typing Animation Simulation */
+        .typewriter span {
+            opacity: 0;
+            transform: translateY(10px);
+            display: inline-block;
+            animation: fadeInUp 0.5s forwards;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal Effect */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
+<body class="relative">
 
-<body class="bg-[#05060a] text-slate-300">
+    <div id="progress-bar"></div>
+    <div id="mouse-glow"></div>
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
 
-<!-- NAVBAR -->
-<nav class="fixed top-0 w-full backdrop-blur-md border-b border-slate-800 bg-[#05060a]/80 px-6">
-  <div class="max-w-7xl mx-auto h-16 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center">
-        ⚡
-      </div>
-      <span class="text-white font-bold text-sm tracking-widest uppercase">Jit_Bauri.ai</span>
-    </div>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/5 bg-[#05060a]/80 px-6">
+        <div class="max-w-7xl mx-auto h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <i data-lucide="zap" class="text-white w-4 h-4"></i>
+                </div>
+                <span class="text-white font-bold text-sm tracking-widest uppercase">Jit_Bauri.ai</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                <a href="#home" class="hover:text-indigo-400 transition-colors">Bio</a>
+                <a href="#expertise" class="hover:text-indigo-400 transition-colors">Expertise</a>
+                <a href="#focus" class="hover:text-indigo-400 transition-colors">Focus</a>
+                <a href="#contact" class="hover:text-indigo-400 transition-colors">Connect</a>
+            </div>
+        </div>
+    </nav>
 
-    <div class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-      <a href="#about">Bio</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#focus">Focus</a>
-      <a href="#contact">Connect</a>
-    </div>
-  </div>
-</nav>
+    <main class="relative z-10">
+        
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6">
+            <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-indigo-500/20 bg-indigo-500/5 text-indigo-400 font-mono text-[10px] font-bold uppercase tracking-widest mb-8">
+                        <i data-lucide="command" class="w-3.5 h-3.5"></i>
+                        <span>BSc Computer Science • AI Aspirant</span>
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-8xl font-black text-white mb-6 leading-[0.9] tracking-tighter">
+                        Python <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-500">
+                            Engineer.
+                        </span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-400 mb-10 max-w-xl leading-relaxed font-light">
+                        Specializing in <span class="text-white font-semibold underline decoration-indigo-500/30 underline-offset-4 tracking-tight">Machine Learning</span> and <span class="text-white font-semibold">Data Science</span> logic. Bridging raw data with intelligent neural architectures.
+                    </p>
 
-<!-- HERO -->
-<section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6">
-  <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="flex flex-col sm:flex-row gap-5 items-center">
+                        <a href="resume.pdf" download class="btn-fill group h-14 w-full sm:w-64 rounded-xl border border-indigo-500/30 bg-indigo-600/10 flex items-center justify-center gap-3 shadow-xl">
+                            <span class="flex items-center gap-2 text-indigo-100 font-bold uppercase tracking-widest text-[10px] group-hover:text-white">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                Download CV
+                            </span>
+                        </a>
 
-    <div>
-      <div class="mb-6 text-indigo-400 font-mono text-sm">
-        BSc Computer Science • AI Aspirant
-      </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/jitbauri" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-indigo-500/50 text-slate-400 hover:text-indigo-400 transition-all shadow-xl">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/jit-bauri-440332284/" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-indigo-500/50 text-slate-400 hover:text-indigo-400 transition-all shadow-xl">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-      <h1 class="text-6xl md:text-8xl font-black text-white mb-6">
-        Python <br/>
-        <span class="text-indigo-400">Engineer.</span>
-      </h1>
+                <!-- Visual Core: Image & Code Bio -->
+                <div class="relative flex justify-center lg:justify-end reveal" style="transition-delay: 0.2s;">
+                    <div class="relative w-full max-w-[420px] aspect-square">
+                        <div class="absolute inset-0 bg-indigo-600/10 blur-[100px] rounded-full"></div>
+                        
+                        <div class="absolute inset-0 rounded-3xl border border-white/5 bg-[#0d1117] overflow-hidden group shadow-2xl p-1">
+                            <div class="absolute top-0 w-full h-10 bg-slate-900/80 backdrop-blur-md border-b border-white/5 flex items-center px-6 justify-between z-20">
+                                <div class="flex gap-2">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
+                                </div>
+                                <span class="text-[10px] font-mono text-slate-600 uppercase tracking-widest italic">python_runtime.py</span>
+                            </div>
 
-      <p class="text-lg text-slate-400 mb-10 max-w-xl">
-        Specializing in Machine Learning and Data Science logic.
-      </p>
+                            <div class="w-full h-full flex flex-col items-center justify-center p-8 pt-16">
+                                <div class="w-32 h-32 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-8 overflow-hidden relative group-hover:border-indigo-500/50 transition-all shadow-inner">
+                                   <i data-lucide="user" class="text-slate-800 w-16 h-16 group-hover:text-indigo-500/20 transition-all duration-700"></i>
+                                   <img src="profile picture.gif" class="w-full h-full object-cover absolute inset-0 opacity-80" alt="Jit Bauri" onerror="this.style.display='none'">
+                                </div>
+                                
+                                <div class="w-full font-mono text-[11px] space-y-3 leading-relaxed typewriter" id="metadata-code">
+                                    <div style="animation-delay: 1.2s"><span><span class="text-indigo-400">01</span> <span class="text-purple-400">class</span> <span class="text-yellow-200">Engineer</span> {</span></div>
+                                    <div class="pl-6" style="animation-delay: 1.4s"><span><span class="text-indigo-400">02</span> <span class="text-slate-500">lang:</span> <span class="text-orange-300">"Python"</span>,</span></div>
+                                    <div class="pl-6" style="animation-delay: 1.6s"><span><span class="text-indigo-400">03</span> <span class="text-slate-500">research:</span> [<span class="text-emerald-400">"AI"</span>, <span class="text-emerald-400">"ML"</span>],</span></div>
+                                    <div class="pl-6" style="animation-delay: 1.8s"><span><span class="text-indigo-400">04</span> <span class="text-slate-500">goal:</span> <span class="text-orange-300">"IIT_MTech"</span>,</span></div>
+                                    <div style="animation-delay: 2.0s"><span><span class="text-indigo-400">05</span> }</span></div>
+                                </div>
+                            </div>
 
-      <a href="resume.pdf" download
-         class="bg-indigo-600 px-6 py-3 rounded-lg text-white font-bold">
-         Download Resume
-      </a>
-    </div>
+                            <div class="scanner-line z-10 shadow-[0_0_10px_#6366f1]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="text-center">
-      <img src="profile picture.gif" class="rounded-xl w-72 mx-auto"/>
-    </div>
+        <!-- About Section -->
+        <section id="about" class="py-24 px-6 border-t border-slate-900 bg-slate-950/20">
+            <div class="max-w-4xl mx-auto reveal">
+                <div class="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 shadow-2xl relative overflow-hidden">
+                    <h2 class="text-xs font-bold text-indigo-400 uppercase tracking-[0.3em] mb-6 tracking-widest">Aspirant Profile</h2>
+                    <p class="text-xl md:text-2xl text-slate-200 leading-relaxed font-light italic">
+                        “I am Jit, a software engineering student specializing in <span class="text-indigo-400 font-bold">Python</span>. My mission is to bridge the gap between raw data and actionable intelligence using <span class="text-indigo-400 uppercase tracking-widest font-black">AI & Machine Learning</span>. Currently training models and aiming for specialized research at <span class="text-white">IIT</span>.”
+                    </p>
+                </div>
+            </div>
+        </section>
 
-  </div>
-</section>
+        <!-- Expertise Section -->
+        <section id="expertise" class="py-24 px-6 border-t border-slate-900">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tighter italic tracking-widest">Technical <span class="text-indigo-500 underline decoration-indigo-500/20 underline-offset-8">Infrastructure</span></h2>
+                </div>
 
-<!-- ABOUT -->
-<section id="about" class="py-24 px-6">
-  <div class="max-w-4xl mx-auto">
-    <p class="text-xl text-slate-200">
-      I am Jit, a software engineering student specializing in Python.
-      My mission is AI & Machine Learning research at IIT.
-    </p>
-  </div>
-</section>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Expertise Cards -->
+                    <div class="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group reveal">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 shadow-inner"><i data-lucide="code-2" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Python Engineering</h3>
+                        <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">Core Architecture</p>
+                    </div>
+                    <div class="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group reveal" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 shadow-inner"><i data-lucide="brain-circuit" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Machine Learning</h3>
+                        <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">Model Design</p>
+                    </div>
+                    <div class="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group reveal" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 shadow-inner"><i data-lucide="database" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Data Science</h3>
+                        <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">Analytics</p>
+                    </div>
+                    <div class="p-8 rounded-2xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/30 transition-all group reveal" style="transition-delay: 0.3s;">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center mb-6 shadow-inner"><i data-lucide="cpu" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-white font-bold mb-1 uppercase tracking-widest text-sm">Neural Networks</h3>
+                        <p class="text-[10px] font-mono text-indigo-500/60 uppercase font-bold tracking-[0.2em]">DL Research</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- EXPERTISE -->
-<section id="expertise" class="py-24 px-6">
-  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Focus Section -->
+        <section id="focus" class="py-24 px-6 border-t border-slate-900 bg-slate-950/20">
+            <div class="max-w-7xl mx-auto">
+                 <div class="text-center mb-16 reveal">
+                  <h2 class="text-3xl font-black text-white uppercase tracking-tighter italic tracking-widest">Research <span class="text-indigo-500">& Development</span></h2>
+                </div>
 
-    <div class="card">Python Engineering</div>
-    <div class="card">Machine Learning</div>
-    <div class="card">Data Science</div>
-    <div class="card">Neural Networks</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-10 rounded-3xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/20 transition-all group relative overflow-hidden shadow-2xl reveal">
+                        <div class="p-4 rounded-2xl bg-indigo-600/5 border border-indigo-600/10 shadow-inner w-fit mb-6"><i data-lucide="activity" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4 italic tracking-tight">Predictive Analytics</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Developing and optimizing regression models using Python to forecast complex data patterns.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 uppercase">Python</span>
+                            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 uppercase">Scikit-Learn</span>
+                        </div>
+                    </div>
+                    <div class="p-10 rounded-3xl bg-[#0d1117] border border-slate-800 hover:border-indigo-500/20 transition-all group relative overflow-hidden shadow-2xl reveal" style="transition-delay: 0.2s;">
+                        <div class="p-4 rounded-2xl bg-indigo-600/5 border border-indigo-600/10 shadow-inner w-fit mb-6"><i data-lucide="pie-chart" class="text-indigo-400 w-6 h-6"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-4 italic tracking-tight">Exploratory Research</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">Uncovering deep insights from unstructured datasets through statistical modeling.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 uppercase">Pandas</span>
+                            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-500 uppercase">Seaborn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  </div>
-</section>
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6 border-t border-slate-900">
+            <div class="max-w-5xl mx-auto reveal">
+                <div class="bg-[#0d1117] border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl relative p-10 md:p-16 text-center">
+                    <h2 class="text-4xl md:text-5xl font-black text-white mb-6 italic tracking-tighter uppercase">Initialize <span class="text-indigo-500 underline underline-offset-[12px] decoration-1 decoration-indigo-500/20">Contact.</span></h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                       <div class="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5">
+                          <i data-lucide="mail" class="text-indigo-500 w-6 h-6"></i>
+                          <span class="text-[10px] font-mono text-slate-400 break-all">jitbauri.official@gmail.com</span>
+                       </div>
+                       <a href="https://github.com/jitbauri" target="_blank" class="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
+                          <i data-lucide="github" class="text-indigo-500 w-6 h-6"></i>
+                          <span class="text-[10px] font-mono text-slate-400 tracking-widest">/jitbauri</span>
+                       </a>
+                       <a href="https://www.linkedin.com/in/jit-bauri-440332284/" target="_blank" class="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
+                          <i data-lucide="linkedin" class="text-indigo-500 w-6 h-6"></i>
+                          <span class="text-[10px] font-mono text-slate-400 tracking-widest">/jit-bauri</span>
+                       </a>
+                       <a href="https://x.com/inc_jit" target="_blank" class="flex flex-col items-center gap-3 p-6 rounded-2xl bg-slate-900/50 border border-white/5 hover:border-indigo-500/50 transition-all">
+                          <i data-lucide="twitter" class="text-indigo-500 w-6 h-6"></i>
+                          <span class="text-[10px] font-mono text-slate-400 tracking-widest">@inc_jit</span>
+                       </a>
+                    </div>
 
-<!-- CONTACT -->
-<section id="contact" class="py-24 px-6">
-  <div class="max-w-xl mx-auto">
-    <form id="contactForm" class="space-y-4">
-      <input type="text" placeholder="Name" required class="input"/>
-      <input type="email" placeholder="Email" required class="input"/>
-      <textarea placeholder="Message" required class="input"></textarea>
+                    <div class="max-w-xl mx-auto" id="form-container">
+                        <form id="contact-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800" placeholder="Sender_ID">
+                                <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all placeholder:text-slate-800" placeholder="Sender_Endpoint">
+                            </div>
+                            <textarea required rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-5 py-4 text-white text-[11px] font-mono focus:outline-none focus:border-indigo-500/50 transition-all resize-none placeholder:text-slate-800" placeholder="Message_Payload"></textarea>
+                            <button type="submit" class="btn-fill w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-4 rounded-xl flex items-center justify-center gap-3 transition-all tracking-widest uppercase text-[10px] shadow-[0_10px_20px_-5px_#6366f155]">
+                                <span>Initialize Link</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-      <button class="bg-indigo-600 w-full py-3 text-white rounded-lg">
-        Send Message
-      </button>
-    </form>
+    <footer class="py-16 text-center border-t border-slate-900 bg-[#05060a] px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] font-mono text-slate-600 uppercase tracking-[0.5em]">
+           <div class="flex items-center gap-2">
+            <i data-lucide="sparkles" class="text-indigo-500 w-3 h-3"></i>
+            <span>AI_ASPIRANT_JIT_BAURI</span>
+           </div>
+           <p class="italic opacity-50">&copy; 2025 // Neural_Network_Reserved</p>
+        </div>
+    </footer>
 
-    <div id="successMsg" class="hidden text-green-400 mt-6">
-      Message Sent Successfully!
-    </div>
-  </div>
-</section>
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
 
-<script src="script.js"></script>
+        // Mouse Glow Effect
+        document.addEventListener('mousemove', e => {
+            document.documentElement.style.setProperty('--x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+
+        // Scroll Reveal Intersection Observer
+        const observerOptions = { threshold: 0.1 };
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Simulated Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button span');
+            const originalText = btn.innerText;
+            btn.innerText = "Executing Upload...";
+            
+            setTimeout(() => {
+                document.getElementById('form-container').innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-center py-10 animate-pulse">
+                        <i data-lucide="check-circle-2" class="text-indigo-400 w-12 h-12 mb-6 shadow-[0_0_20px_#6366f1]"></i>
+                        <h3 class="text-xl font-bold text-white mb-2 uppercase tracking-widest">Transmission Successful</h3>
+                        <button onclick="location.reload()" class="mt-8 text-indigo-400 text-[10px] uppercase font-bold tracking-widest hover:text-white transition-all underline">Send New Thread</button>
+                    </div>
+                `;
+                lucide.createIcons();
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
